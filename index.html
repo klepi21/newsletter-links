@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Newsletter Links</title>
+  <meta name="description" content="Βάλε links σε συγκεκριμένα σημεία μιας εικόνας newsletter. Η εικόνα κόβεται αυτόματα σε κομμάτια που δουλεύουν σε όλα τα email." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="6" width="26" height="20" rx="4"/><path d="M3 11l13 8 13-8"/><circle cx="23" cy="21" r="5.5" class="dot"/><path d="M21 21h4M23 19v4" class="plus"/></svg>
+      <div>
+        <h1>Newsletter Links</h1>
+        <p>Links σε συγκεκριμένα σημεία της εικόνας σου, σε κάθε email</p>
+      </div>
+    </div>
+    <ol class="steps" aria-label="Βήματα">
+      <li id="st1" class="on"><b>1</b> Εικόνα</li>
+      <li id="st2"><b>2</b> Links</li>
+      <li id="st3"><b>3</b> Εξαγωγή</li>
+    </ol>
+  </header>
+
+  <main class="layout">
+    <section class="stage-col">
+      <div class="drop" id="drop">
+        <input type="file" id="file" accept="image/jpeg,image/png,image/webp" hidden />
+        <div class="drop-inner">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="30" rx="5"/><circle cx="17" cy="19" r="3.5"/><path d="M6 33l11-10 9 8 6-5 10 8"/></svg>
+          <h2>Σύρε εδώ την εικόνα του newsletter</h2>
+          <p>ή <button class="linkish" id="pick">διάλεξε αρχείο</button> (JPEG, PNG ή WebP)</p>
+          <small>Η εικόνα μένει στον υπολογιστή σου. Δεν ανεβαίνει πουθενά.</small>
+        </div>
+      </div>
+      <div class="editor-shell" id="shell" hidden>
+        <div class="toolbar">
+          <span class="tip"><svg viewBox="0 0 24 24"><path d="M4 4h6M4 4v6M20 20h-6M20 20v-6"/><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg>Σύρε με το ποντίκι πάνω στην εικόνα για να φτιάξεις πλαίσιο link</span>
+          <span class="meta" id="meta"></span>
+          <button class="ghost" id="newImg">Άλλη εικόνα</button>
+        </div>
+        <div class="stage" id="stage"></div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <section class="card">
+        <div class="card-head"><h3>Links</h3><span class="count" id="count">0</span></div>
+        <div class="links" id="links">
+          <p class="empty" id="empty">Δεν υπάρχουν ακόμα links. Ζωγράφισε ένα πλαίσιο πάνω στην εικόνα, π.χ. γύρω από ένα κουμπί ή ένα προϊόν.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><h3>Ρυθμίσεις email</h3></div>
+        <div class="grid2">
+          <label>Πλάτος (px)<input type="number" id="width" value="600" min="320" max="800" step="10" /></label>
+          <label>Φόντο<span class="color"><input type="color" id="bg" value="#f4f4f4" /><input type="text" id="bgText" value="#f4f4f4" /></span></label>
+        </div>
+        <label>Ποιότητα εικόνας <output id="qOut">82</output>
+          <input type="range" id="quality" min="50" max="95" value="82" />
+        </label>
+        <label>Κείμενο προεπισκόπησης
+          <input type="text" id="preheader" placeholder="Φαίνεται δίπλα στο θέμα στα εισερχόμενα" />
+        </label>
+        <details>
+          <summary>Περισσότερα</summary>
+          <label>Τίτλος σελίδας<input type="text" id="title" placeholder="Newsletter" /></label>
+          <label>Link «Προβολή στον browser»<input type="url" id="viewOnline" placeholder="https://" /></label>
+          <label>Κείμενο κάτω από την εικόνα
+            <textarea id="footer" rows="3" placeholder="π.χ. στοιχεία εταιρείας ή σύνδεσμος διαγραφής"></textarea>
+          </label>
+          <label>Διεύθυνση όπου θα ανέβουν οι εικόνες
+            <input type="url" id="base" placeholder="https://site.gr/newsletter/2026-11/" />
+            <small>Μόνο αν φιλοξενείς τις εικόνες εσύ. Για Mailchimp άφησέ το κενό.</small>
+          </label>
+          <label>Μορφή αρχείων
+            <select id="format"><option value="jpg">JPEG (μικρότερα αρχεία)</option><option value="png">PNG (για γραφικά με λίγα χρώματα)</option></select>
+          </label>
+        </details>
+      </section>
+
+      <section class="card export">
+        <div class="card-head"><h3>Εξαγωγή</h3></div>
+        <button class="secondary wide" id="btnPreview" disabled>Προεπισκόπηση email</button>
+
+        <div class="host" id="hostBox">
+          <button class="primary wide" id="btnHost" disabled>
+            <svg viewBox="0 0 24 24"><path d="M12 15V4m0 0L8 8m4-4 4 4"/><path d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg>
+            <span>Ανέβασμα και έτοιμο email</span>
+          </button>
+          <p class="note">Οι εικόνες ανεβαίνουν με μόνιμα links, και το email αντιγράφεται έτοιμο για επικόλληση.</p>
+        </div>
+
+        <div class="host-done" id="hostDone" hidden>
+          <p class="ok"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>Οι εικόνες ανέβηκαν. Τώρα επικόλλησέ το όπου θέλεις.</p>
+          <button class="primary wide" id="btnRich">Αντιγραφή για Gmail / Outlook</button>
+          <button class="secondary wide" id="btnCode">Αντιγραφή κώδικα HTML</button>
+          <ol class="howto">
+            <li><b>Gmail ή Outlook:</b> νέο μήνυμα και επικόλληση (Cmd+V ή Ctrl+V).</li>
+            <li><b>Mailchimp, Brevo κλπ:</b> επικόλλησε τον κώδικα στο πεδίο HTML.</li>
+          </ol>
+        </div>
+
+        <details class="manual">
+          <summary>Χωρίς ανέβασμα (ZIP)</summary>
+          <div class="row">
+            <button class="secondary" id="btnZip" disabled>Λήψη ZIP</button>
+            <button class="secondary" id="btnCopy" disabled>Αντιγραφή HTML</button>
+          </div>
+          <p class="note" id="note">Το ZIP έχει το email και τις εικόνες του. Στο Mailchimp: <i>Create, Email, Code your own, Import zip</i>.</p>
+        </details>
+        <p class="stats" id="stats"></p>
+      </section>
+    </aside>
+  </main>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Προεπισκόπηση</h3>
+        <div class="seg" role="tablist">
+          <button class="on" data-w="desktop">Υπολογιστής</button>
+          <button data-w="mobile">Κινητό</button>
+        </div>
+        <label class="outline"><input type="checkbox" id="showCuts" /> Δείξε τα κοψίματα</label>
+        <button class="close" id="closeModal" aria-label="Κλείσιμο">&times;</button>
+      </div>
+      <div class="modal-body"><iframe id="frame" title="Προεπισκόπηση email"></iframe></div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
